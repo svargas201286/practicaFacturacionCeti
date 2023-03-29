@@ -104,7 +104,7 @@ if (isset($_GET['op'])) {
     if ($_GET['op'] == 'modificarCliente') {
         //Array asociativo con todos los datos
         $datosmodificar = [
-            "idCliente"         => $_GET['idCliente'],
+            "idCliente"         => $_GET["idCliente"],
             "idTipoDocumento"   => $_GET["idTipoDocumento"],
             "nroDoc"            => $_GET["nroDoc"],
             "razonSocial"       => $_GET["razonSocial"],

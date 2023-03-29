@@ -198,6 +198,7 @@ $(".btn-mod-Cliente").on("click", function () {
   } else {
     var datos = {
       op: "modificarCliente",
+      idCliente: idCliente,
       razonSocial: razonSocial,
       idTipoDocumento: idTipoDocumento,
       nroDoc: nroDoc,
