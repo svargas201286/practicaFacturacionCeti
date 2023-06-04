@@ -30,9 +30,9 @@ if (isset($_GET['op'])) {
                 
                 <td class='td-actions text-right'> 
 
-                     <button data-idCliente='{$listaCliente->idCliente}' type='button' rel='tooltip' style='color:black' class='get btn btn-info btn-round' data-original-title='' title='Ver'>
+                <!-- <button data-idCliente='{$listaCliente->idCliente}' type='button' rel='tooltip' style='color:black' class='get btn btn-info btn-round' data-original-title='' title='Ver'>
                         <i class='material-icons'>visibility</i>
-                     </button>
+                     </button> -->
 
                      <button  data-idCliente='{$listaCliente->idCliente}' type='button' rel='tooltip' style='color:black' class='editar btn btn-success btn-round' title='Editar'>
                      <i class='material-icons'>edit</i>
@@ -72,47 +72,100 @@ if (isset($_GET['op'])) {
     }
 
     // REGISTRAR CLIENTE
-    if ($_GET['op'] == 'RegistrarCliente') {
-        $datos = [
-            "idTipoDocumento"   => $_GET['idTipoDocumento'],
-            "nroDoc"            => $_GET['nroDoc'],
-            "razonSocial"       => $_GET['razonSocial'],
-            "direccion"         => $_GET['direccion'],
-            "telefono"          => $_GET['telefono'],
-            "idrol"             => $_GET['idrol']
-        ];
+    if ($_GET['op'] == "RegistrarCliente") {
 
-        $cliente->RegistrarCliente($datos);
-    }
-
-    //OPTENER ID CLIENTE
-
-    if ($_GET['op'] == "IDCliente") { //
-
-        $data = $cliente->OptenerIdCliente(["idCliente" => $_GET['idCliente']]);
-        // print_r($data);
-        if ($data) {
-            foreach ($data as $undata) {
-                echo json_encode($undata);
-            }
+        $ClienteExiste = $cliente->OptenerDocumentoCliente(["nroDoc" => $_GET['nroDoc']]);
+        if ($ClienteExiste) {
+            echo "0"; //El  Numero Doc. ya esta registrado
         } else {
-            echo '-1';
+            $datos = [   // Guardamos los datos generales de la persona en un array
+                "idTipoDocumento"   => $_GET['idTipoDocumento'],
+                "nroDoc"            => $_GET['nroDoc'],
+                "razonSocial"       => $_GET['razonSocial'],
+                "direccion"         => $_GET['direccion'],
+                "telefono"          => $_GET['telefono'],
+                "idrol"             => $_GET['idrol']
+            ];
+            $RegistrarCliente = $cliente->registrarCliente($datos); // Registramos al cliente
+            if ($RegistrarCliente) { // Validamos si todo fue correcto
+                echo "1";
+            } else {
+                echo "-2";
+            }
         }
     }
+}
 
-    // MODIFICAR CLIENTE
-    if ($_GET['op'] == 'modificarCliente') {
-        //Array asociativo con todos los datos
-        $datosmodificar = [
-            "idCliente"         => $_GET["idCliente"],
-            "idTipoDocumento"   => $_GET["idTipoDocumento"],
-            "nroDoc"            => $_GET["nroDoc"],
-            "razonSocial"       => $_GET["razonSocial"],
-            "direccion"         => $_GET["direccion"],
-            "telefono"          => $_GET["telefono"],
-            "idrol"             => $_GET["idrol"]
-        ];
-        $cliente->modificarCliente($datosmodificar);
+
+
+
+// REGISTRAR CLIENTE
+// if ($_GET['op'] == 'RegistrarCliente') {
+//     $datos = [
+//         "idTipoDocumento"   => $_GET['idTipoDocumento'],
+//         "nroDoc"            => $_GET['nroDoc'],
+//         "razonSocial"       => $_GET['razonSocial'],
+//         "direccion"         => $_GET['direccion'],
+//         "telefono"          => $_GET['telefono'],
+//         "idrol"             => $_GET['idrol']
+//     ];
+
+//     $cliente->RegistrarCliente($datos);
+// }
+
+//OPTENER ID CLIENTE
+
+if ($_GET['op'] == "IDCliente") { //
+
+    $data = $cliente->OptenerIdCliente(["idCliente" => $_GET['idCliente']]);
+    // print_r($data);
+    if ($data) {
+        foreach ($data as $undata) {
+            echo json_encode($undata);
+        }
+    } else {
+        echo '-1';
     }
+}
 
+// MODIFICAR CLIENTE
+if ($_GET['op'] == 'modificarCliente') {
+    //Array asociativo con todos los datos
+    $datosmodificar = [
+        "idCliente"         => $_GET["idCliente"],
+        "idTipoDocumento"   => $_GET["idTipoDocumento"],
+        "nroDoc"            => $_GET["nroDoc"],
+        "razonSocial"       => $_GET["razonSocial"],
+        "direccion"         => $_GET["direccion"],
+        "telefono"          => $_GET["telefono"],
+        "idrol"             => $_GET["idrol"]
+    ];
+    $cliente->modificarCliente($datosmodificar);
+}
+
+if ($_GET['op'] == "IDRoles") { //
+
+    $dataRol = $cliente->OptenerIdRoles(["idrol" => $_GET['idrol']]);
+    // print_r($data);
+    if ($dataRol) {
+        foreach ($dataRol as $undata) {
+            echo json_encode($undata);
+        }
+    } else {
+        echo '-1';
+    }
+}
+
+if ($_GET['op'] == 'modificarCliente') {
+    //Array asociativo con todos los datos
+    $datosmodificar = [
+        "idCliente"         => $_GET["idCliente"],
+        "idTipoDocumento"   => $_GET["idTipoDocumento"],
+        "nroDoc"            => $_GET["nroDoc"],
+        "razonSocial"       => $_GET["razonSocial"],
+        "direccion"         => $_GET["direccion"],
+        "telefono"          => $_GET["telefono"],
+        "idrol"             => $_GET["idrol"]
+    ];
+    $cliente->modificarCliente($datosmodificar);
 }

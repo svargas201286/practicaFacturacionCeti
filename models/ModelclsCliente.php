@@ -37,11 +37,28 @@ class clsCliente extends ModelMaster
     }
   }
 
+  public function OptenerDocumentoCliente(array $data)
+  {
+      try {
+          return parent::execProcedure($data, "spu_cliente_OptenerDocumento4", true);
+      } catch (Exception $error) {
+          die($error->getMessage());
+      }
+  }
 
   function RegistrarCliente(array $data)
   {
     try {
       parent::execProcedure($data, "spu_clientes_registrar", false);
+    } catch (Exception $e) {
+      die($e->getMessage());
+    }
+  }
+  
+  function EliminarCliente(array $data)
+  {
+    try {
+      parent::execProcedure($data, "", false);
     } catch (Exception $e) {
       die($e->getMessage());
     }
@@ -66,6 +83,13 @@ class clsCliente extends ModelMaster
       }
   }
 
- 
+  public function OptenerIdRoles(array $data)
+  {
+    try {
+      return parent :: execProcedure($data, "spu_Roles_OptenerId", true);
+    } catch (Exception $error) {
+      die($error->getMessage());
+    }
+  }
 
 }

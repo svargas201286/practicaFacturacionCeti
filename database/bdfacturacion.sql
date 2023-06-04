@@ -13,6 +13,7 @@ CREATE TABLE TipoDocumento
 ENGINE = INNODB;
 
 
+
 -- crear tabla TablaParametrica
 CREATE TABLE TablaParametrica
 (
@@ -183,7 +184,8 @@ CREATE TABLE Cliente
 	razonSocial 		VARCHAR(50)	NULL,
 	direccion 		VARCHAR(50)	NULL,
 	telefono 			VARCHAR(15)	NULL,
-	idrol			INT 			NOT NULL, DEFAULT '3',
+	idrol			INT 			NOT NULL DEFAULT '3',
+	estado			CHAR(1)		NOT NULL DEFAULT '1', -- estado 1 activo estado 0 inactivo
 	CONSTRAINT fk_TipoDocumento_TipDoc FOREIGN KEY (idTipoDocumento) REFERENCES tipodocumento (idTipoDocumento),
 	CONSTRAINT fk_rol_idRol FOREIGN KEY (idrol) REFERENCES roles (idrol),
 	CONSTRAINT uk_Cliente UNIQUE (idTipoDocumento, nroDoc)
@@ -264,14 +266,53 @@ CREATE TABLE producto
 	idProducto 		INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
 	nombre 			VARCHAR(150) 	NOT NULL,
 	precio 			DECIMAL(11,2) 	NOT NULL,
+	idMoneda			INT 			NOT NULL,	
 	tipoPrecio 		CHAR(2) 		NOT NULL,
 	idTipoAfectacion  	INT 			NOT NULL,
 	idUnidad  		INT 			NOT NULL,
+	imagen			VARCHAR(200) 	NULL DEFAULT 'assets/img/anonymous.png',
+	codigo 			VARCHAR(50) 	NOT NULL DEFAULT '-',
+	idCategoria 		INT 			NOT NULL,
+	stock			INT 			NOT NULL,
+	fecha 			DATETIME		NOT NULL DEFAULT NOW(),
+	
 	CONSTRAINT fk_idTipoAfectacion_TipoAfectacion FOREIGN KEY (idTipoAfectacion) REFERENCES tipoafectacion (idTipoAfectacion),
 	CONSTRAINT fk_idUnidad_unidad FOREIGN KEY (idUnidad) REFERENCES unidad (idUnidad)
+	CONSTRAINT fk_idCategoria_categoria FOREIGN KEY (idCategoria) REFERENCES categoria (idCategoria)
 )
 ENGINE = INNODB;
 
+-- actualizando la tabla usuarios (null)
+ALTER TABLE producto ADD idMoneda INT;
+
+-- asignar un valor 1 (para evitar que sea NULL)
+UPDATE producto SET idMoneda = 1;
+
+-- volvemos actualizar la tabla asisgnando restriccion NOT NULL "idrol"
+ALTER TABLE producto MODIFY codigo VARCHAR(50);
+
+-- volvemos actualizar la tabla asisgnando restriccion NOT NULL "idrol"
+ALTER TABLE producto MODIFY idMoneda INT NOT NULL;
+
+-- pendiente "idrol" debe ser FK(roles)
+
+ALTER TABLE producto ADD CONSTRAINT fk_idCategoria_categoria FOREIGN KEY (idCategoria)REFERENCES categoria(idCategoria);
+SELECT * FROM producto;
+
+CREATE TABLE categoria
+(
+	idCategoria  	INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	nombre 		VARCHAR (50) NOT NULL,
+	fecha 		DATETIME		NOT NULL DEFAULT NOW(),
+	CONSTRAINT uk_nombre_categoria UNIQUE (nombre)
+)
+ENGINE = INNODB;
+
+
+
+INSERT INTO categoria (nombre) VALUES
+('MUEBLES'),
+('SERVICIOS');
 
 CREATE TABLE detallenotacredito
 (
@@ -465,5 +506,5 @@ INSERT INTO usuarios (idPersona, userName, userPassword,idrol) VALUES
 992615367 bertha
 
 
-
+update `bdfacturacion`.`cliente` set `estado` = '1';
 

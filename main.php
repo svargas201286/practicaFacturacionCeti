@@ -56,6 +56,7 @@ if ($_SESSION['acceso'] == false) {
   <link href="assets/demo/demo.css" rel="stylesheet" />
 
   <link rel="stylesheet" type="text/css" href="select2/select2.min.css">
+  <link rel="stylesheet" href="assets/css/carrito.css">
 
   <style>
     .circular--square {
@@ -159,7 +160,7 @@ if ($_SESSION['acceso'] == false) {
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="main.php?view=clientes">
+            <a class="nav-link" href="main.php?view=factura">
               <i class="material-icons">assignment_ind</i>
               <p> factura</p>
             </a>
@@ -382,6 +383,7 @@ if ($_SESSION['acceso'] == false) {
   <script src="assets/demo/demo.js"></script>
   <script src="dist/pages/loadweb.js"></script>  
   <script src="select2/select2.min.js"></script>
+ 
 
   <!-- inicio login -->
   <script>

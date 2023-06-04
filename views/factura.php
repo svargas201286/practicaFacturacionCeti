@@ -35,11 +35,11 @@ if ($_SESSION['acceso'] == false) {
 
                             </select>
 
-                            <div class="col-md-1">
+                            <!-- <div class="col-md-1">
                                 <button type="submit" class="btn btn-white btn-round btn-just-icon">
                                     <i class="material-icons">search</i>
                                 </button>
-                            </div>
+                            </div> -->
 
                             <div class="col-md-2">
                                 <!-- <label for="" style="color:black">CANTIDAD :</label> -->
@@ -251,7 +251,6 @@ if ($_SESSION['acceso'] == false) {
             data: "op=CargarProducto",
             success: function(response) {
                 $("#controlBuscador").html(response);
-
 
             }
 

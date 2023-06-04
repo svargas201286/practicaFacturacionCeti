@@ -2,6 +2,9 @@ var idCliente = "";
 
 function reiniciarUI() {
   $("#nuevoRegistroModal")[0].reset();
+  $("#cancelarRegistro")[0].reset();
+  $("#closemodal")[0].reset();
+  $("#nuevoRegistroModal")[0].reset();
 }
 
 function ListCliente() {
@@ -30,14 +33,14 @@ function listarDocumentos() {
     data: "op=CargarDocumento",
     success: function (response) {
       $("#controlBuscador").html(response);
-      $("#TipoDocumento").html(response);
+      $(".doc").html(response);
     },
   });
 }
 
 $(document).ready(function () {
   $("#controlBuscador").select2();
-  $("#TipoDocumento").select2();
+  // $("#TipoDocumento").select2();
 });
 
 // API BUSQUEDA POR DNI
@@ -100,7 +103,7 @@ function listarRoles() {
     data: "op=CargarRoles",
     success: function (response) {
       $("#TipoCliente").html(response);
-      $("#ClienteRols").html(response);
+      $(".rol").html(response);
     },
   });
 }
@@ -121,9 +124,13 @@ $("#btnGuardarRegistroCliente").on("click", function () {
     direccion == "" ||
     telefono == "" ||
     idrol == ""
-  ) {
-    alert("por favor complete los campos que falte");
-  } else {
+  )
+    Swal.fire({
+      icon: "warning",
+      title: "Completar todos los campos",
+      text: "Cliente - Registrar",
+    });
+  else {
     var datos = {
       op: "RegistrarCliente",
       idTipoDocumento: idTipoDocumento,
@@ -133,15 +140,37 @@ $("#btnGuardarRegistroCliente").on("click", function () {
       telefono: telefono,
       idrol: idrol,
     };
+    Swal.fire({
+      title: "¿Todo sus datos estan correctos?",
+      text: "Usuarios - Registrar",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Aceptar",
+      cancelButtonText: "Cancelar",
+    });
     $.ajax({
       url: "controller/ClientesController.php",
       type: "GET",
       data: datos,
       success: function (e) {
-        alert("se guardo correctamente");
-        reiniciarUI();
+        if ($.trim(e) == "-2") {
+          Swal.fire({
+            icon: "warning",
+            title: "Registrado correctamente",
+            text: "Cliente - Registrar",
+          });
+          location.href = location.href;
+        } else if ($.trim(e) == "0") {
+          Swal.fire({
+            icon: "warning",
+            title: "Nro de Documento no se puede registrar",
+            text: "Cliente - Registrar",
+          });
+        }
+
         $("#modalRegisterCliente").modal("hide");
-        ListCliente();
       },
     });
   }
@@ -193,7 +222,8 @@ $(".btn-mod-Cliente").on("click", function () {
     nroDoc == "" ||
     direccion == "" ||
     telefono == "" ||
-    idrol == "") {
+    idrol == ""
+  ) {
     alert("por favor llene los campos");
   } else {
     var datos = {
@@ -204,7 +234,7 @@ $(".btn-mod-Cliente").on("click", function () {
       nroDoc: nroDoc,
       direccion: direccion,
       telefono: telefono,
-      idrol: idrol
+      idrol: idrol,
     };
     if (confirm("¿Estas seguro de Modicar a este cliente?")) {
       $.ajax({
@@ -213,12 +243,16 @@ $(".btn-mod-Cliente").on("click", function () {
         data: datos,
         success: function (e) {
           alert("Se modifico correctamente");
-          ListCliente();
+          $("#modalActualizarCliente").modal("hide");
+          
         },
       });
     }
   }
 });
+
+$("#cancelarRegistro").click(reiniciarUI);
+$("#closemodal").click(reiniciarUI);
 
 listarDocumentos();
 listarRoles();

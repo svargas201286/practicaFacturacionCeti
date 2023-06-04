@@ -17,6 +17,21 @@ if ($_SESSION['acceso'] == false) {
             <div class="card-icon">
               <i class="material-icons">group</i>
             </div>
+
+            <tr>
+              <td>
+                <div class="box">
+                  <div class="col col-lg-12 col-sm-12 col-xs-12">
+                    <div class="contenedor-tipo-documento">
+                      <label for="dnis" id="dni" class="">DNI</label>
+                      <input type="radio" id="dnis" class="tipo_desc" name="tipo_desc" value="S/" checked>
+                      <label for="rucs" id="ruc" class="">RUC</label>
+                      <input type="radio" id="rucs" class="tipo_desc" name="tipo_desc" value="%">
+                    </div>
+                  </div>
+                </div>
+            </tr>
+
             <h4 class="card-title" style="color:black"><b>Cliente / Proveedor</b></h4>
             <button type="button" rel="tooltip" data-target="#modalRegisterCliente" data-toggle="modal" class="btn btn-primary btn-round btn-sm ml-auto" data-original-title="" title="registrar">
               <i class="material-icons">person</i> Registrar Cliente
@@ -74,19 +89,15 @@ if ($_SESSION['acceso'] == false) {
             </div>
 
             <div class="col-md-5">
-              <label for="txtTipoDocumnento" style="color:black"><b>Tipo Documento :</b></label>
+              <label for="controlBuscador" style="color:black"><b>Tipo Documento :</b></label>
             </div>
             <div class="col-md-5">
-
-
 
               <select class="js-example-basic-single" name="state" id="controlBuscador">
 
               </select>
 
             </div>
-
-
 
             <div class="col-md-5">
               <label for="txtNumeroDocumnento" style="color:black"><b>Numero de Documneto :</b></label>
@@ -121,10 +132,10 @@ if ($_SESSION['acceso'] == false) {
             </div>
 
             <div class="col-md-5">
-              <label for="" style="color:black"><b>Cliente / Proveedor :</b></label>
+              <label for="TipoCliente" style="color:black"><b>Cliente / Proveedor :</b></label>
             </div>
             <div class="col-md-5">
-              <select name="" id="TipoCliente" class="form-control" required="">
+              <select name="TipoCliente" id="TipoCliente" class="form-control" required="">
               </select>
             </div>
           </div>
@@ -171,13 +182,11 @@ if ($_SESSION['acceso'] == false) {
               <label for="TipoDocumento" style="color:black"><b>Tipo Documento :</b></label>
             </div>
 
-            <div class="col-md-5">
-              <select class="js-example-basic-single" name="state" id="TipoDocumento">
-
+            <div class="col-md-6">
+              <!-- <input  type="tel" id="TipoDocumento" placeholder="Documento" class="form-control" required=""> -->
+              <select name="TipoDocumento" id="TipoDocumento" class="doc form-control">
               </select>
             </div>
-
-
 
             <div class="col-md-5">
               <label for="ClienteNroDocumnento" style="color:black"><b>Numero de Documneto :</b></label>
@@ -207,10 +216,12 @@ if ($_SESSION['acceso'] == false) {
             </div>
 
             <div class="col-md-5">
-              <label for="ClienteRols" style="color:black"><b>Cliente / Proveedor :</b></label>
+              <label for="ClienteRols" id="" style="color:black"><b>Cliente / Proveedor :</b></label>
             </div>
             <div class="col-md-5">
-              <select name="ClienteRols" id="ClienteRols" class="form-control" required="">
+              <!-- <input  type="tel" id="ClienteRols" placeholder="Roles" class="form-control" required=""> -->
+              <br>
+              <select name="ClienteRols" id="ClienteRols" class="rol form-control" required="">
               </select>
             </div>
           </div>
@@ -220,7 +231,7 @@ if ($_SESSION['acceso'] == false) {
       </div>
       <div class="modal-footer">
         <button class="btn-mod-Cliente btn btn-success btn-sm btn-round" type="button" id="">
-          <i class="material-icons">save</i> Registrar
+          <i class="material-icons">save</i> Actualizar
         </button>
 
         <button class="btn btn-danger btn-sm btn-round" type="button" id="cancelarRegistro" data-dismiss="modal">
